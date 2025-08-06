@@ -1,9 +1,9 @@
 let songs = [];
 let songNames = [
   "fast.mp3",      // dance
-  "midfast.mp3", // disco
+  "midfast.mp3",   // disco
   "mid.mp3",       // jazz
-  "midslow.mp3",    // pop
+  "midslow.mp3",   // pop
   "slow.mp3"       // drift
 ];
 let buttonLabels = ["dance", "disco", "jazz", "pop", "drift"];
@@ -34,6 +34,7 @@ const repeat       = 3;
 const baseR        = 120;
 const gap          = 0;
 const ringWidth    = 12;
+const topSpace     = 140; // 预留给按钮区的高度，可调
 
 function preload() {
   for(let i=0;i<songNames.length;i++){
@@ -42,7 +43,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight - topSpace);
   angleMode(DEGREES);
 
   fft = new p5.FFT(0.85, bins);
@@ -86,7 +87,7 @@ function setup() {
   });
   ctrlBtns.push(btnPause);
 
-  //playSong(0);
+  //playSong(0); // 不自动播放
 }
 
 function styleModernBtn(btn, active){
@@ -120,7 +121,8 @@ function playSong(idx){
 
 function draw() {
   background('#fff');
-  translate(width/2, height/2);
+  // 画布中心整体下移（避免与按钮重叠，调80-120更舒适）
+  translate(width/2, height/2 + 40);
 
   const spectrum = fft.analyze();
 
@@ -185,6 +187,10 @@ function drawThickRing(r0, w, spec, ringIdx, phase, col, ampScale) {
   outer.forEach(([x,y]) => vertex(x, y));
   for(let i=inner.length-1; i>=0; i--) vertex(inner[i][0], inner[i][1]);
   endShape(CLOSE);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight - topSpace);
 }
 
 let shot = 0;

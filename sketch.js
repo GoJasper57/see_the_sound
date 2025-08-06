@@ -86,7 +86,7 @@ function setup() {
   });
   ctrlBtns.push(btnPause);
 
-  playSong(0);
+  //playSong(0);
 }
 
 function styleModernBtn(btn, active){

@@ -122,7 +122,7 @@ function playSong(idx){
 function draw() {
   background('#fff');
   // 画布中心整体下移（避免与按钮重叠，调80-120更舒适）
-  translate(width/2, height/2 + 200);
+  translate(width/2, height/2 + 100);
 
   const spectrum = fft.analyze();
 
